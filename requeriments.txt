@@ -1,0 +1,7 @@
+Flask == colcocar a versão
+SQLAlchemy == colcocar a versão
+Flask-SQLAlchemy == colcocar a versão
+
+abaixo comando para instalar todas as bibliotecas de umas só vez:
+
+"pip intall -r requeriments.txt"
