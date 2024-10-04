@@ -1,11 +1,10 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
+from app import app, db
 
-db = create_engine()
-Session = sessionmaker(bind=db)
-session = Session()
+if __name__ == '__main__':
+    # Criar as tabelas no banco de dados dentro do contexto da aplicação
+    with app.app_context():
+        db.create_all()
+        print("Tabelas criadas com sucesso!")
 
-Base = declarative_base()
-
-
-Base.metadata.create_all(bind=db)
+    # Rodar o servidor
+    app.run(debug=True)

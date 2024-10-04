@@ -1,6 +1,6 @@
-Flask == colcocar a versão
-SQLAlchemy == colcocar a versão
-Flask-SQLAlchemy == colcocar a versão
+Flask
+Flask-SQLAlchemy
+Flask-Migrate
 
 abaixo comando para instalar todas as bibliotecas de umas só vez:
 
