@@ -1,6 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
+from app import db
 
-db = SQLAlchemy()
 
 class Professor(db.Model):
     __tablename__ = 'professores'
@@ -21,7 +21,8 @@ class Turma(db.Model):
     ativo = db.Column(db.Boolean, default=True)
 
     # Relacionamento com Professor
-    professor_id = db.Column(db.Integer, db.ForeignKey('professores.id'), nullable=False)
+    professor_id = db.Column(db.Integer, db.ForeignKey(
+        'professores.id'), nullable=False)
 
     # Relacionamento com Alunos
     alunos = db.relationship('Aluno', backref='turma', lazy="select")
@@ -38,4 +39,5 @@ class Aluno(db.Model):
     media_final = db.Column(db.Float)
 
     # Relacionamento com Turma
-    turma_id = db.Column(db.Integer, db.ForeignKey('turmas.id'), nullable=False)
+    turma_id = db.Column(db.Integer, db.ForeignKey(
+        'turmas.id'), nullable=False)
