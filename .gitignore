@@ -12,7 +12,6 @@ __pycache__/
 .vscode/*
 .pytest_cache
 
-#django
 *.log
 *.pot
 *.pyc
