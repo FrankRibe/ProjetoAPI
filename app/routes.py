@@ -1,5 +1,5 @@
-from flask import render_template
-from app import app, db
+from flask import render_template  # noqa: F401
+from app import app, db  # noqa: F401
 from app.models import Professor, Turma, Aluno
 
 
