@@ -1,9 +1,8 @@
 from flask import Blueprint, request, jsonify
-from professor_model import (
+from app.professor.professor_model import (
     ProfessorNaoEncontrado, listar_professores, professor_por_id,
     adicionar_professor, atualizar_professor, excluir_professor
 )
-
 
 professores_blueprint = Blueprint('professores', __name__)
 
@@ -15,7 +14,7 @@ def get_professores():
 
 @professores_blueprint.route('/professores/<int:id_professor>',
                              methods=['GET'])
-def set_professores(id_professor):
+def get_professores_id(id_professor):
     try:
         professor = professor_por_id(id_professor)
         return jsonify(professor)
@@ -32,8 +31,8 @@ def create_professor():
     
     required_keys = {"nome", "idade", "materia"}
     if not required_keys.issubset(data.keys()):
-        return jsonify({"error": f"Dados incompletos. Campos {required_keys}"
-                        " são necessários."}), 400
+        return jsonify({"error": f"Dados incompletos. "
+                        f"Campos {required_keys} são necessários."}), 400
     adicionar_professor(data)
     return jsonify(data), 201
 

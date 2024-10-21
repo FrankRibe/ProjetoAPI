@@ -1,5 +1,5 @@
 from flask import render_template, request, jsonify
-from app import app, db  # noqa: F401
+from app import app, db
 from app.models import Professor, Turma, Aluno
 
 
@@ -28,9 +28,11 @@ def listar_professores():
 @app.route('/professores', methods=['POST'])
 def adicionar_professor():
     data = request.get_json()
-    novo_professor = Professor(nome=data['nome'], idade=data['idade'],
-                               materia=data['materia'],
-                               observacoes=data['observacoes'])
+    novo_professor = Professor(
+        nome=data['nome'], idade=data['idade'],
+        materia=data['materia'],
+        observacoes=data.get('observacoes', "")
+    )
     db.session.add(novo_professor)
     db.session.commit()
     return jsonify({"message": "Professor adicionado com sucesso!"}), 201
