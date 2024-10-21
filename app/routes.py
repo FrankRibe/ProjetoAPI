@@ -1,6 +1,8 @@
 from flask import render_template, jsonify, request
-from app import app, db
+from datetime import datetime
+from . import app, db
 from app.models import Professor, Turma, Aluno
+
 
 @app.route("/")
 def index():
@@ -50,28 +52,33 @@ def adicionar_turma():
 @app.route('/alunos', methods=['GET'])
 def listar_alunos():
     alunos = Aluno.query.all()
-    return [
-        {
-            "id": aluno.id,
-            "nome": aluno.nome,
-            "idade": aluno.idade,
-            "turma_id": aluno.turma_id,
-            "data_nascimento": aluno.data_nascimento,
-            "nota_primeiro_semestre": aluno.nota_primeiro_semestre,
-            "nota_segundo_semestre": aluno.nota_segundo_semestre,
-            "media_final": aluno.media_final
-        }
-        for aluno in alunos
-    ]
+    return  {
+        "alunos":[
+            {
+                "id": aluno.id,
+                "nome": aluno.nome,
+                "idade": aluno.idade,
+                "turma_id": aluno.turma_id,
+                "data_nascimento": aluno.data_nascimento,
+                "nota_primeiro_semestre": aluno.nota_primeiro_semestre,
+                "nota_segundo_semestre": aluno.nota_segundo_semestre,
+                "media_final": aluno.media_final
+            }
+            for aluno in alunos
+        ]
+    }
 
 @app.route('/alunos', methods=['POST'])
 def adicionar_aluno():
     data = request.json
+
+    data_nascimento = datetime.strptime(data["data_nascimento"], '%Y-%m-%d').date()
+
     novo_aluno = Aluno(
         nome=data["nome"],
         idade=data["idade"],
         turma_id=data["turma_id"],
-        data_nascimento=data["data_nascimento"],
+        data_nascimento=data_nascimento,  
         nota_primeiro_semestre=data["nota_primeiro_semestre"],
         nota_segundo_semestre=data["nota_segundo_semestre"],
         media_final=data["media_final"]
