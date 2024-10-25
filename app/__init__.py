@@ -21,6 +21,7 @@ db = SQLAlchemy(app)
 from app.alunos.alunos_routes import alunos_blueprint  # Caminho correto para o blueprint
 app.register_blueprint(alunos_blueprint)
 
+
 # Importando modelos e rotas
 from app import models, routes  # Certifique-se de que as rotas estão definidas
 
