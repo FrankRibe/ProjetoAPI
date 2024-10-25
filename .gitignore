@@ -9,13 +9,17 @@ src/database/__init__.py
 *.py[cod]
 *$py.class
 __pycache__/
+__pycache__
 .vscode/*
 .pytest_cache
 
-#django
 *.log
 *.pot
 *.pyc
 __pycache__
 db.sqlite3
 media
+
+node_modules/
+package-lock.json
+package.json

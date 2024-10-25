@@ -18,7 +18,10 @@ app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
 db = SQLAlchemy(app)
 
 # Importando o blueprint após a instância do app ter sido criada
-from app.alunos.alunos_routes import alunos_blueprint  # Caminho correto para o blueprint
+from app.turmas.turmas_routes import turmas_blueprint  # Caminho correto para o blueprint
+app.register_blueprint(turmas_blueprint)
+
+from app.alunos.alunos_routes import alunos_blueprint
 app.register_blueprint(alunos_blueprint)
 
 

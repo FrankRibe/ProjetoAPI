@@ -1,14 +1,21 @@
 from flask import Blueprint, request, jsonify
-from .turmas_model import TurmaNaoEncontrado, listar_turmas, turma_por_id, adicionar_turma, atualizar_turma, excluir_turma
+from .turmas_model import (
+    TurmaNaoEncontrado, listar_turmas, turma_por_id,
+    adicionar_turma, atualizar_turma, excluir_turma
+    )
 
 turmas_blueprint = Blueprint('turmas', __name__)
 
 # Rota para listar todas as turmas
+
+
 @turmas_blueprint.route("/turmas", methods=["GET"])
 def get_turmas():
     return jsonify(listar_turmas())
 
 # Rota para obter uma turma pelo ID
+
+
 @turmas_blueprint.route("/turmas/<int:id_turma>", methods=["GET"])
 def get_turma(id_turma):
     try:
@@ -18,6 +25,8 @@ def get_turma(id_turma):
         return jsonify({"message": "Turma não encontrada"}), 404
 
 # Rota para criar uma nova turma
+
+
 @turmas_blueprint.route("/turmas", methods=["POST"])
 def create_turma():
     data = request.json
@@ -28,6 +37,8 @@ def create_turma():
         return jsonify({"error": str(e)}), 400
 
 # Rota para atualizar uma turma pelo ID
+
+
 @turmas_blueprint.route("/turmas/<int:id_turma>", methods=["PUT"])
 def update_turma(id_turma):
     data = request.json
@@ -38,6 +49,8 @@ def update_turma(id_turma):
         return jsonify({"message": "Turma não encontrada"}), 404
 
 # Rota para excluir uma turma pelo ID
+
+
 @turmas_blueprint.route("/turmas/<int:id_turma>", methods=["DELETE"])
 def delete_turma(id_turma):
     try:

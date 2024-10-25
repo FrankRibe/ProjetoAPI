@@ -8,6 +8,7 @@ from app.models import Professor, Turma, Aluno
 def index():
     return "<h1>Bem-vindo à Escola API!</h1>"
 
+
 @app.route('/professores', methods=['GET'])
 def listar_professores():
     professores = Professor.query.all()
@@ -24,24 +25,29 @@ def listar_professores():
         ]
     })
 
+
 @app.route('/turmas', methods=['GET'])
 def listar_turmas():
     turmas = Turma.query.all()
-    return jsonify([
-        {
-            "id": turma.id,
-            "descricao": turma.descricao,
-            "professor_id": turma.professor_id
-        }
-        for turma in turmas
-    ])
+    return {
+        "professores": [
+            {
+                "id": turma.id,
+                "descricao": turma.descricao,
+                "professor_id": turma.professor_id
+            }
+            for turma in turmas
+        ]
+    }
+
 
 @app.route('/turmas', methods=['POST'])
 def adicionar_turma():
     data = request.json
     if not data.get('descricao') or not data.get('professor_id'):
         return jsonify({"message": "Dados inválidos!"}), 400
-    nova_turma = Turma(descricao=data['descricao'], professor_id=data['professor_id'])
+    nova_turma = Turma(
+        descricao=data['descricao'], professor_id=data['professor_id'])
     db.session.add(nova_turma)
     db.session.commit()
     return jsonify({
@@ -49,11 +55,12 @@ def adicionar_turma():
         "message": "Turma adicionada com sucesso!"
     }), 201
 
+
 @app.route('/alunos', methods=['GET'])
 def listar_alunos():
     alunos = Aluno.query.all()
-    return  {
-        "alunos":[
+    return {
+        "alunos": [
             {
                 "id": aluno.id,
                 "nome": aluno.nome,
@@ -68,17 +75,19 @@ def listar_alunos():
         ]
     }
 
+
 @app.route('/alunos', methods=['POST'])
 def adicionar_aluno():
     data = request.json
 
-    data_nascimento = datetime.strptime(data["data_nascimento"], '%Y-%m-%d').date()
+    data_nascimento = datetime.strptime(
+        data["data_nascimento"], '%Y-%m-%d').date()
 
     novo_aluno = Aluno(
         nome=data["nome"],
         idade=data["idade"],
         turma_id=data["turma_id"],
-        data_nascimento=data_nascimento,  
+        data_nascimento=data_nascimento,
         nota_primeiro_semestre=data["nota_primeiro_semestre"],
         nota_segundo_semestre=data["nota_segundo_semestre"],
         media_final=data["media_final"]
