@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
+
 # Criação da instância do Flask
 app = Flask(__name__)
 
@@ -9,13 +10,15 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///escola.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
     "connect_args": {
-        "timeout": 30  # Espera por 30 segundos antes de retornar erro de banco de dados bloqueado
+        "timeout": 30
     }
 }
 
-
 # Instância do banco de dados
 db = SQLAlchemy(app)
+
+from app.professor.professor_routes import professores_blueprint
+app.register_blueprint(professores_blueprint)
 
 # Importando o blueprint após a instância do app ter sido criada
 from app.turmas.turmas_routes import turmas_blueprint  # Caminho correto para o blueprint
