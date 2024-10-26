@@ -8,6 +8,11 @@ app = Flask(__name__)
 # Configuração do banco de dados
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///escola.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
+    "connect_args": {
+        "timeout": 30
+    }
+}
 
 # Instância do banco de dados
 db = SQLAlchemy(app)
