@@ -1,28 +1,24 @@
-from flask import render_template, jsonify, request
+from flask import (
+    render_template, jsonify, request, redirect, url_for, flash
+)
 from app import app, db
 from app.models import Professor, Turma, Aluno
 
 
 @app.route("/")
 def index():
-    return "<h1>Bem-vindo à Escola API!</h1>"
+    professores = Professor.query.all()
+    turmas = Turma.query.all()
+    alunos = Aluno.query.all()
+    return render_template('index.html', professores=professores,
+                           turmas=turmas, alunos=alunos)
 
 
 @app.route('/professores', methods=['GET'])
 def listar_professores():
     professores = Professor.query.all()
-    return {
-        "professores": [
-            {
-                "id": prof.id,
-                "nome": prof.nome,
-                "idade": prof.idade,
-                "materia": prof.materia,
-                "observacoes": prof.observacoes
-            }
-            for prof in professores
-        ]
-    }
+    return render_template('professor/professores.html',
+                           professores=professores)
 
 
 @app.route('/professores', methods=['POST'])
@@ -67,16 +63,7 @@ def excluir_professor(id):
 @app.route('/turmas', methods=['GET'])
 def listar_turmas():
     turmas = Turma.query.all()
-    return {
-        "professores": [
-            {
-                "id": turma.id,
-                "descricao": turma.descricao,
-                "professor_id": turma.professor_id
-            }
-            for turma in turmas
-        ]
-    }
+    return render_template('turma/turmas.html', turmas=turmas)
 
 
 @app.route('/turmas', methods=['POST'])
@@ -94,46 +81,31 @@ def adicionar_turma():
     }), 201
 
 
+# Rota para listar alunos
 @app.route('/alunos', methods=['GET'])
 def listar_alunos():
     alunos = Aluno.query.all()
-    return {
-        "alunos": [
-            {
-                "id": aluno.id,
-                "nome": aluno.nome,
-                "idade": aluno.idade,
-                "turma_id": aluno.turma_id,
-                "data_nascimento": aluno.data_nascimento,
-                "nota_primeiro_semestre": aluno.nota_primeiro_semestre,
-                "nota_segundo_semestre": aluno.nota_segundo_semestre,
-                "media_final": aluno.media_final
-            }
-            for aluno in alunos
-        ]
-    }
+    return render_template('aluno/alunos.html', alunos=alunos)
+
+# Rota para adicionar aluno (GET)
 
 
-@app.route('/alunos', methods=['POST'])
+@app.route('/alunos/adicionar', methods=['GET'])
+def adicionar_aluno_form():
+    return render_template('aluno/criarAlunos.html')
+
+# Rota para adicionar aluno (POST)
+
+
+@app.route('/alunos/adicionar', methods=['POST'])
 def adicionar_aluno():
-    data = request.json
-
-    data_nascimento = datetime.strptime(
-        data["data_nascimento"], '%Y-%m-%d').date()
-
+    data = request.form
     novo_aluno = Aluno(
-        nome=data["nome"],
-        idade=data["idade"],
-        turma_id=data["turma_id"],
-        data_nascimento=data_nascimento,
-        nota_primeiro_semestre=data["nota_primeiro_semestre"],
-        nota_segundo_semestre=data["nota_segundo_semestre"],
-        media_final=data["media_final"]
+        nome=data['nome'],
+        idade=data['idade'],
+        # Preencha outros campos conforme necessário
     )
-
     db.session.add(novo_aluno)
     db.session.commit()
-    return jsonify({
-        "id": novo_aluno.id,
-        "message": "Aluno adicionado com sucesso!"
-    }), 201
+    flash('Aluno adicionado com sucesso!', 'success')
+    return redirect(url_for('listar_alunos'))
