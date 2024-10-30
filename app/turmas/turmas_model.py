@@ -61,15 +61,19 @@ def adicionar_turma(dados_turma):
         raise
 
 
-def atualizar_turma(id_turma, novos_dados):
+def atualizar_turma(id_turma, data):
     turma = Turma.query.get(id_turma)
     if not turma:
-        raise TurmaNaoEncontrado
+        raise TurmaNaoEncontrado("Turma não encontrada.")
+    
+    # Atualiza os campos da turma
+    turma.descricao = data.get('descricao')
+    turma.professor_id = data.get('professor_id')
 
-    turma.descricao = novos_dados.get("descricao")
-    turma.professor_id = novos_dados.get("professor_id")
-    turma.status = novos_dados.get("status")
+    # Atualiza o status da turma
+    turma.status = data['status']  # O status já é um booleano
 
+    # Salva as alterações
     db.session.commit()
 
 

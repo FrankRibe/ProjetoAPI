@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Turmas</title>
+</head>
+<body>
+    <h1>Lista de Turmas</h1>
+    <a href="/turmas/novo">Adicionar Turma</a>
+    <ul>
+        {% if turmas %}
+            {% for turma in turmas %}
+                <li>
+                    <strong>Descrição:</strong> {{ turma.descricao }} 
+                    - <strong>Status:</strong> {{ 'Ativo' if turma.status else 'Inativo' }}
+                    <a href="/turmas/{{ turma.id }}">Detalhes</a>
+                    <a href="/turmas/{{ turma.id }}/atualizar">Editar</a>
+                    <form action="/turmas/{{ turma.id }}" method="POST" style="display:inline;" onsubmit="return confirmDelete(this);">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit">Excluir</button>
+                    </form>
+                </li>
+            {% endfor %}
+        {% else %}
+            <li>Nenhuma turma cadastrada.</li>
+        {% endif %}
+    </ul>
+</body>
+<script>
+    function confirmDelete(form) {
+        if (confirm("Tem Certeza que deseja excluir este aluno")) {
+            fetch(form.action, {
+                method: "POST",
+                body: new URLSearchParams(new FormData(form))
+            })
+            .then(response => {
+                if (response.ok) {
+                    location.reload();  // Recarrega a página após a exclusão
+                } else {
+                    alert("Erro ao excluir o aluno.");
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+            });
+            return false;  // Impede o envio normal do formulário
+        }
+        return false;  // Cancela a exclusão se o usuário não confirmar
+    }
+</script>
+</html>

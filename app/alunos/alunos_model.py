@@ -87,8 +87,7 @@ def atualizar_aluno(id_aluno, novos_dados):
     if not aluno:
         raise AlunoNaoEncontrado
 
-    print(f"Novos dados para o aluno {id_aluno}: {
-          novos_dados}")  # Para depuração
+    print(f"Novos dados para o aluno {id_aluno}: {novos_dados}")  # Para depuração
 
     aluno.nome = novos_dados.get("nome")
     aluno.idade = novos_dados.get("idade")
