@@ -7,28 +7,40 @@
 </head>
 <body>
     <h1>Bem-vindo à Escola API!</h1>
-    <h2>Professores</h2>
+    <h2>
+        <a href="/professor">Professores</a>
+    </h2>
     <ul>
         {% for professor in professores %}
-            <li>{{ professor.nome }} - {{ professor.materia }}</li>
+            <li>
+                <a href="/professor/{{ professor.id }}">{{ professor.nome }}</a> - {{ professor.materia }}
+            </li>
         {% else %}
             <li>Nenhum professor encontrado.</li>
         {% endfor %}
     </ul>
 
-    <h2>Turmas</h2>
+    <h2>
+        <a href="/turmas">Turmas</a>
+    </h2>
     <ul>
         {% for turma in turmas %}
-            <li>{{ turma.descricao }}</li>
+            <li>
+                <a href="/turmas/{{ turma.id }}">{{ turma.descricao }}</a>
+            </li>
         {% else %}
             <li>Nenhuma turma encontrada.</li>
         {% endfor %}
     </ul>
 
-    <h2>Alunos</h2>
+    <h2>
+        <a href="/alunos">Alunos</a>
+    </h2>
     <ul>
         {% for aluno in alunos %}
-            <li>{{ aluno.nome }} - {{ aluno.idade }} anos</li>
+            <li>
+                <a href="/alunos/{{ aluno.id }}">{{ aluno.nome }}</a> - {{ aluno.idade }} anos
+            </li>
         {% else %}
             <li>Nenhum aluno encontrado.</li>
         {% endfor %}
