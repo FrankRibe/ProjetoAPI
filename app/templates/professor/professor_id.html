@@ -13,11 +13,11 @@
     <p><strong>Matéria:</strong> {{ professor.matéria }}</p>
     <p><strong>Observações:</strong> {{ professor.observações }}</p>
 
-    <a href="/professor/{{ professor.id }}/atualizar">Editar Professor</a>
-    <form action="/professor/{{ professor.id }}" method="POST" onsubmit="return confirmDelete(this);">
+    <a href="/professores/{{ professor.id }}/atualizar">Editar</a>
+    <form action="/professores/{{ professor.id }}" method="POST" onsubmit="return confirmDelete(this);">
         <input type="hidden" name="_method" value="DELETE">
         <button type="submit">Excluir Professor</button>
-    </form>
+    </form> 
     
     <a href="/professor">Voltar para a lista de professores</a>
 
@@ -25,14 +25,14 @@
         function confirmDelete(form) {
             if (confirm("Tem certeza que deseja excluir este professor?")) {
                 fetch(form.action, {
-                    method: "POST",
+                    method: "POST",  // Mantenha como POST
                     body: new URLSearchParams(new FormData(form))
                 })
                 .then(response => {
                     if (response.ok) {
-                        window.location.href = "/professores";  // Redireciona para a lista de professores após a exclusão
+                        location.href = "/professor";  // Redireciona para a lista após a exclusão
                     } else {
-                        alert("Erro ao excluir o professor: " + response.statusText);
+                        alert("Erro ao excluir o professor.");
                     }
                 })
                 .catch(error => {

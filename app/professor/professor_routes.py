@@ -8,6 +8,8 @@ from app.professor.professor_model import (
     adicionar_professor, atualizar_professor, excluir_professor
 )
 
+
+
 professores_blueprint = Blueprint('professores', __name__)
 
 @professores_blueprint.route("/professor", methods=["GET"])
@@ -63,17 +65,16 @@ def atualizar_professor_view(id_professor):
         if request.method == "POST":
             novos_dados = request.form.to_dict()
             atualizar_professor(id_professor, novos_dados)
-            return redirect(url_for('professores.listar_professores_view'))
+            return redirect(url_for('professores.listar_professores_view'))  # Redireciona para a lista
         return render_template('professor/professor_update.html', professor=professor)
     except ProfessorNaoEncontrado:
         return jsonify({"message": "Professor não encontrado"}), 404
 
 @professores_blueprint.route("/professores/<int:id_professor>", methods=["POST"])
 def excluir_professor_view(id_professor):
-    if request.form.get ("_method") == "DELETE":
+    if request.form.get('_method') == 'DELETE':
         try:
             excluir_professor(id_professor)
             return "", 204
         except ProfessorNaoEncontrado:
-            return jsonify ({"message": "Professor não encontrado"}), 404
-    return jsonify ({"message": "Método não permitido"}), 405    
+            return jsonify({"message": "Professor não encontrado"}), 404

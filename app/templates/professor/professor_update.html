@@ -18,10 +18,37 @@
         <input type="text" id="materia" name="materia" value="{{ professor.materia }}" required>
 
         <label for="observacoes">Observações:</label>
-        <textarea id="observacoes" name="observacoes">{{ professor.observações }}</textarea>
+        <textarea id="observacoes" name="observacoes">{{ professor.observacoes }}</textarea>
 
         <input type="submit" value="Atualizar Professor">
     </form>
-    <a href="/professores">Voltar para a lista de professores</a>
+
+    <a href="/professor">Voltar para a lista de professores</a>
+
+    <script>
+        function confirmDelete(form) {
+            if (confirm("Tem certeza que deseja excluir este professor?")) {
+                fetch(form.action, {
+                    method: "POST",
+                    body: new URLSearchParams(new FormData(form))
+                })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.href = "/professores"; // Redireciona para a lista de professores
+                    } else {
+                        alert("Erro ao excluir o professor.");
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                });
+                return false;  // Impede o envio normal do formulário
+            }
+            return false;  // Cancela a exclusão se o usuário não confirmar
+        }
+    </script>
+</body>
+</html>
+
 </body>
 </html>

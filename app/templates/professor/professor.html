@@ -15,11 +15,11 @@
                     <strong>Nome:</strong> {{ professor.nome }} 
                     <strong>Matéria:</strong> {{ professor.matéria }}
                     <a href="/professor/{{ professor.id }}">Detalhes</a>
-                    <a href="/professor/{{ professor.id }}/editar">Editar</a>
-                    <form action="/professor/{{ professor.id }}" method="POST" style="display:inline;" onsubmit="return confirmDelete(this);">
+                    <a href="/professores/{{ professor.id }}/atualizar">Editar</a>
+                    <form action="/professores/{{ professor.id }}" method="POST" onsubmit="return confirmDelete(this);">
                         <input type="hidden" name="_method" value="DELETE">
-                        <button type="submit">Excluir</button>
-                    </form>
+                        <button type="submit">Excluir Professor</button>
+                    </form>                    
                 </li>
             {% endfor %}
         {% else %}
@@ -28,25 +28,30 @@
     </ul>
 </body>
 <script>
-    function confirmDelete(form) {
-        if (confirm("Tem certeza que deseja excluir este professor?")) {
-            fetch(form.action, {
-                method: "POST",
-                body: new URLSearchParams(new FormData(form))
-            })
-            .then(response => {
-                if (response.ok) {
-                    location.reload();  // Recarrega a página após a exclusão
-                } else {
-                    alert("Erro ao excluir o professor.");
-                }
-            })
-            .catch(error => {
-                console.error('Erro:', error);
-            });
-            return false;  // Impede o envio normal do formulário
-        }
-        return false;  // Cancela a exclusão se o usuário não confirmar
+function confirmDelete(form) {
+    if (confirm("Tem certeza que deseja excluir este professor?")) {
+        console.log("Ação do formulário:", form.action);
+        console.log("Dados do formulário:", new URLSearchParams(new FormData(form)));
+        
+        fetch(form.action, {
+            method: "POST",
+            body: new URLSearchParams(new FormData(form))
+        })
+        .then(response => {
+            if (response.ok) {
+                location.reload();  // Recarrega a página após a exclusão
+            } else {
+                alert("Erro ao excluir o professor.");
+            }
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+        });
+        return false;  // Impede o envio normal do formulário
     }
+    return false;  // Cancela a exclusão se o usuário não confirmar
+}
+
+
 </script>
 </html>
