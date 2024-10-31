@@ -7,15 +7,16 @@
 </head>
 <body>
     <h1>Lista de Turmas</h1>
-    <a href="/turmas/novo">Adicionar Turma</a>
+    <a href="{{ url_for('index') }}"><button>Página de início</button></a>
+    <a href="/turmas/novo"><button>Adicionar Turma</button></a>
     <ul>
         {% if turmas %}
             {% for turma in turmas %}
                 <li>
                     <strong>Descrição:</strong> {{ turma.descricao }} 
                     - <strong>Status:</strong> {{ 'Ativo' if turma.status else 'Inativo' }}
-                    <a href="/turmas/{{ turma.id }}">Detalhes</a>
-                    <a href="/turmas/{{ turma.id }}/atualizar">Editar</a>
+                    <a href="/turmas/{{ turma.id }}"><button>Detalhes</button></a>
+                    <a href="/turmas/{{ turma.id }}/atualizar"><button>Editar</button></a>
                     <form action="/turmas/{{ turma.id }}" method="POST" style="display:inline;" onsubmit="return confirmDelete(this);">
                         <input type="hidden" name="_method" value="DELETE">
                         <button type="submit">Excluir</button>

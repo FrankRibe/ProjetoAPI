@@ -13,13 +13,13 @@
     <p><strong>Matéria:</strong> {{ professor.matéria }}</p>
     <p><strong>Observações:</strong> {{ professor.observações }}</p>
 
-    <a href="/professores/{{ professor.id }}/atualizar">Editar</a>
+    <a href="/professores/{{ professor.id }}/atualizar"><button>Editar</button></a>
     <form action="/professores/{{ professor.id }}" method="POST" onsubmit="return confirmDelete(this);">
         <input type="hidden" name="_method" value="DELETE">
         <button type="submit">Excluir Professor</button>
     </form> 
     
-    <a href="/professor">Voltar para a lista de professores</a>
+    <a href="/professor"><button>Voltar para a lista de professores</button></a>
 
     <script>
         function confirmDelete(form) {

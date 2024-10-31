@@ -12,13 +12,13 @@
     <p><strong>Professor ID:</strong> {{ turma.professor_id }}</p>  
     <p><strong>Status:</strong> {{ 'Ativo' if turma.status else 'Inativo' }}</p>
 
-    <a href="/turmas/{{ turma.id }}/atualizar">Editar Turma</a>
+    <a href="/turmas/{{ turma.id }}/atualizar"><button>Editar Turma</button></a>
     <form action="/turmas/{{ turma.id }}" method="POST" onsubmit="return confirmDelete(this);">
         <input type="hidden" name="_method" value="DELETE">
         <button type="submit">Excluir Turma</button>
     </form>
     
-    <a href="/turmas">Voltar para a lista de turmas</a>
+    <a href="/turmas"><button>Voltar para a lista de turmas</button></a>
 
     <script>
         function confirmDelete(form) {
