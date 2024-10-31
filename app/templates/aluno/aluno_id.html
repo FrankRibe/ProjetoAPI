@@ -1,23 +1,49 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Detalhes do Aluno</title>
 </head>
-
 <body>
   <h1>Detalhes do Aluno</h1>
   <p><strong>ID:</strong> {{ aluno.id }}</p>
   <p><strong>Nome:</strong> {{ aluno.nome }}</p>
+  <p><strong>Idade:</strong> {{aluno.idade}}</p>
+  <p><strong>Data de nascimento:</strong> {{aluno.data_nascimento}}</p>
+  <p><strong>Nota do primeiro semestre:</strong> {{aluno.nota_primeiro_semestre}}</p>
+  <p><strong>Nota do segundo semestre:</strong> {{aluno.nota_segundo_semestre}}</p>
+  <p><strong>Média final:</strong> {{aluno.media_final}}</p>
 
-  <form id="delete-form" action="{{ url_for('alunos.delete_aluno', id_aluno=aluno.id) }}" method="POST">
+  <a href="/alunos/{{ aluno.id }}/atualizar">Editar Aluno</a>
+  <form action="/alunos/{{ aluno.id }}" method="POST" onsubmit="return confirmDelete(this);">
     <input type="hidden" name="_method" value="DELETE">
     <button type="submit">Excluir Aluno</button>
   </form>
-  <a href="{{ url_for('alunos.get_alunos') }}">Voltar para a lista de alunos</a>
+  <a href="{{ url_for('alunos.listar_alunos_view') }}">Voltar para a lista de alunos</a>
 
+  <script>
+    function confirmDelete(form){
+      if (confirm("Tem certeza que deseja excluir este aluno?")){
+        fetch(form.action, {
+          method: "POST",
+          body: new URLSearchParams(new FormData(form))
+        })
+        .then(response => {
+          if (response.ok) {
+            window.location.href = "/alunos";
+          } else{
+            alert("Erro ao excluir o aluno: " + response.statusText);
+          }
+        })
+        .catch(error => {
+          console.error('Erro:', error);
+        });
+        return false;
+      }
+      return false;
+    }
+  </script>
 
 </body>
 

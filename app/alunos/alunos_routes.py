@@ -1,12 +1,12 @@
 from flask import (
     Blueprint, request, render_template,
     jsonify, redirect, url_for
-    )
-from app.models import Aluno
+)
+from app.models import Aluno, Turma
 from .alunos_model import (
     AlunoNaoEncontrado, listar_alunos, aluno_por_id,
     adicionar_aluno, atualizar_aluno, excluir_aluno
-    )
+)
 from datetime import datetime
 
 alunos_blueprint = Blueprint('alunos', __name__)
@@ -82,7 +82,8 @@ def atualizar_aluno_view(id_aluno):
             return redirect(url_for('listar_alunos'))
         except ValueError as e:
             return jsonify({"error": str(e)}), 400
-    return render_template('atualizar_aluno.html', aluno=aluno, turmas=Turma.query.all())
+    return render_template('aluno/aluno_update.html', aluno=aluno,
+                           turmas=Turma.query.all())
 
 
 @alunos_blueprint.route("/alunos/<int:id_aluno>", methods=["POST"])
@@ -94,4 +95,3 @@ def excluir_aluno_view(id_aluno):
         except AlunoNaoEncontrado:
             return jsonify({"message": "Aluno não encontrado"}), 404
     return jsonify({"message": "Método não permitido"}), 405
-
