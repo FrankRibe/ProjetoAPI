@@ -15,12 +15,12 @@
   <p><strong>Nota do segundo semestre:</strong> {{aluno.nota_segundo_semestre}}</p>
   <p><strong>Média final:</strong> {{aluno.media_final}}</p>
 
-  <a href="/alunos/{{ aluno.id }}/atualizar">Editar Aluno</a>
+  <a href="/alunos/{{ aluno.id }}/atualizar"><button>Editar Aluno</button></a>
   <form action="/alunos/{{ aluno.id }}" method="POST" onsubmit="return confirmDelete(this);">
     <input type="hidden" name="_method" value="DELETE">
     <button type="submit">Excluir Aluno</button>
   </form>
-  <a href="{{ url_for('alunos.listar_alunos_view') }}">Voltar para a lista de alunos</a>
+  <a href="{{ url_for('alunos.listar_alunos_view') }}"><button>Voltar para a lista de alunos</button></a>
 
   <script>
     function confirmDelete(form){

@@ -7,16 +7,16 @@
 </head>
 <body>
     <h1>Alunos</h1>
-    <a href="{{ url_for('index') }}">Página de início</a>
-    <a href="/alunos/adicionar">Adicionar Aluno</a>
+    <a href="{{ url_for('index') }}"><button>Página de início</button></a>
+    <a href="/alunos/adicionar"><button>Adicionar Aluno</button></a>
     <ul>
         {% if alunos %}
             {% for aluno in alunos %}
                 <li>
                     <strong>Nome:</strong> {{ aluno.nome }}
                     <strong>Idade:</strong> {{ aluno.idade }}
-                    <a href="/alunos/{{ aluno.id }}">Detalhes</a>
-                    <a href="/alunos/{{ aluno.id }}/editar">Editar</a>
+                    <a href="/alunos/{{ aluno.id }}"><button>Detalhes</button></a>
+                    <a href="/alunos/{{ aluno.id }}/editar"><button>Editar</button></a>
                     <form action="/alunos/{{ aluno.id }}" method="POST" style="display:inline;" onsubmit="return confirmDelete(this);">
                         <input type="hidden" name="_method" value="DELETE">
                         <button type="submit">Excluir</button>
