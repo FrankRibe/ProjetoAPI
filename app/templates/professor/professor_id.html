@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Professor</title>
+</head>
+<body>
+    <h1>Detalhes do Professor</h1>
+    <p><strong>ID:</strong> {{ professor.id }}</p>
+    <p><strong>Nome:</strong> {{ professor.nome }}</p>
+    <p><strong>Idade:</strong> {{ professor.idade }}</p>
+    <p><strong>Matéria:</strong> {{ professor.matéria }}</p>
+    <p><strong>Observações:</strong> {{ professor.observações }}</p>
+
+    <a href="/professor/{{ professor.id }}/atualizar">Editar Professor</a>
+    <form action="/professor/{{ professor.id }}" method="POST" onsubmit="return confirmDelete(this);">
+        <input type="hidden" name="_method" value="DELETE">
+        <button type="submit">Excluir Professor</button>
+    </form>
+    
+    <a href="/professor">Voltar para a lista de professores</a>
+
+    <script>
+        function confirmDelete(form) {
+            if (confirm("Tem certeza que deseja excluir este professor?")) {
+                fetch(form.action, {
+                    method: "POST",
+                    body: new URLSearchParams(new FormData(form))
+                })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.href = "/professores";  // Redireciona para a lista de professores após a exclusão
+                    } else {
+                        alert("Erro ao excluir o professor: " + response.statusText);
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                });
+                return false;  // Impede o envio normal do formulário
+            }
+            return false;  // Cancela a exclusão se o usuário não confirmar
+        }
+    </script>
+</body>
+</html>
