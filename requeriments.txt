@@ -1,7 +1,0 @@
-Flask
-Flask-SQLAlchemy
-Flask-Migrate
-
-abaixo comando para instalar todas as bibliotecas de umas só vez:
-
-"pip intall -r requeriments.txt"
