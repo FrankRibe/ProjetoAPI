@@ -1,24 +1,36 @@
 import unittest
-from app.model_aluno_professor import Aluno
+from app.model_aluno_professor import (
+    adiciona_aluno,
+    aluno_por_id,
+    AlunoNaoEncontrado,
+    lista_alunos,
+    apaga_tudo  # Importando a função
+)
 
 
-class TestAluno(unittest.TestCase):
+class TestAlunos(unittest.TestCase):
 
-    def test_criar_aluno(self):
-        aluno = Aluno(nome="Carlos", idade=20)
-        self.assertEqual(aluno.nome, "Carlos")
-        self.assertEqual(aluno.idade, 20)
+    def setUp(self):
+        # Limpa a lista de alunos antes de cada teste
+        apaga_tudo()
+        # Adiciona um aluno para os testes
+        self.aluno = {"nome": "lucas", "id": 15}
+        adiciona_aluno(self.aluno)
 
-    def test_atualizar_idade(self):
-        aluno = Aluno(nome="Ana", idade=18)
-        aluno.idade = 21
-        self.assertEqual(aluno.idade, 21)
+    def test_adiciona_aluno(self):
+        """Testa se o aluno é adicionado corretamente."""
+        self.assertIn(self.aluno, lista_alunos())
 
-    def test_nome_completo(self):
-        aluno = Aluno(nome="João Silva", idade=22)
-        self.assertIn("João", aluno.nome)
-        self.assertIn("Silva", aluno.nome)
+    def test_aluno_por_id(self):
+        """Testa a recuperação do aluno por ID."""
+        aluno = aluno_por_id(15)
+        self.assertEqual(aluno['nome'], "lucas")
+
+    def test_aluno_nao_encontrado(self):
+        """Testa a exceção quando o aluno não é encontrado."""
+        with self.assertRaises(AlunoNaoEncontrado):
+            aluno_por_id(999)  # ID que não existe
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

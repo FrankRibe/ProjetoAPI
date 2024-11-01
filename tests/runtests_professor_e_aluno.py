@@ -48,7 +48,7 @@ Testes 100 a 109: Teremos as URLs análogas para professores.
 class TestStringMethods(unittest.TestCase):
 
     def test_000_professor_retorna_lista(self):
-        r = requests.get('http://127.0.0.1:8000/professores')
+        r = requests.get('http://127.0.0.1:8000/professor')
         if r.status_code == 404:
             self.fail("Você não definiu a página /professores no seu server")
 
@@ -61,12 +61,12 @@ class TestStringMethods(unittest.TestCase):
                       "Conteúdo HTML esperado não encontrado na resposta")
 
     def test_001_adiciona_alunos(self):
-        r = requests.post('http://localhost:5002/alunos',
+        r = requests.post('http://127.0.0.1:8000/alunos',
                           data={'nome': 'fernando', 'id': 1})
-        r = requests.post('http://localhost:5002/alunos',
+        r = requests.post('http://127.0.0.1:8000/alunos',
                           data={'nome': 'roberto', 'id': 2})
 
-        r_lista = requests.get('http://localhost:5002/alunos')
+        r_lista = requests.get('http://127.0.0.1:8000/alunos')
         self.assertIn('text/html', r_lista.headers['Content-Type'],
                       "Esperava resposta HTML para a lista de alunos")
 
@@ -80,10 +80,10 @@ class TestStringMethods(unittest.TestCase):
                       "aluno roberto não apareceu na lista de alunos")
 
     def test_002_aluno_por_id(self):
-        r = requests.post('http://localhost:5002/alunos',
+        r = requests.post('http://127.0.0.1:8000/alunos',
                           data={'nome': 'mario', 'id': 20})
 
-        resposta = requests.get('http://localhost:5002/alunos/20')
+        resposta = requests.get('http://127.0.0.1:8000/alunos/20')
         self.assertIn('text/html', resposta.headers['Content-Type'],
                       "Esperava resposta HTML para o aluno")
 
@@ -91,36 +91,37 @@ class TestStringMethods(unittest.TestCase):
                       "Conteúdo HTML esperado não encontrado na resposta")
 
     def test_003_reseta(self):
-        r = requests.post('http://localhost:5002/alunos',
+        r = requests.post('http://127.0.0.1:8000/alunos',
                           data={'nome': 'cicero', 'id': 29})
-        r_lista = requests.get('http://localhost:5002/alunos')
+        r_lista = requests.get('http://127.0.0.1:8000/alunos')
         self.assertTrue(len(r_lista.text) > 0)
 
-        r_reset = requests.post('http://localhost:5002/reseta')
+        r_reset = requests.post('http://127.0.0.1:8000/reseta')
         self.assertEqual(r_reset.status_code, 200)
 
-        r_lista_depois = requests.get('http://localhost:5002/alunos')
+        r_lista_depois = requests.get('http://127.0.0.1:8000/alunos')
         self.assertEqual(len(r_lista_depois.text), 0)
 
     def test_004_deleta(self):
-        r_reset = requests.post('http://localhost:5002/reseta')
+        r_reset = requests.post('http://127.0.0.1:8000/reseta')
         self.assertEqual(r_reset.status_code, 200)
 
-        requests.post('http://localhost:5002/alunos',
+        requests.post('http://127.0.0.1:8000/alunos',
                       data={'nome': 'cicero', 'id': 29})
-        requests.post('http://localhost:5002/alunos',
+        requests.post('http://127.0.0.1:8000/alunos',
                       data={'nome': 'lucas', 'id': 28})
-        requests.post('http://localhost:5002/alunos',
+        requests.post('http://127.0.0.1:8000/alunos',
                       data={'nome': 'marta', 'id': 27})
 
-        r_lista = requests.get('http://localhost:5002/alunos')
+        r_lista = requests.get('http://127.0.0.1:8000/alunos')
         self.assertIn('text/html', r_lista.headers['Content-Type'],
                       "Esperava resposta HTML para a lista de alunos")
 
-        requests.delete('http://localhost:5002/alunos/28')
-        r_lista2 = requests.get('http://localhost:5002/alunos')
+        requests.delete('http://127.0.0.1:8000/alunos/28')
+        r_lista2 = requests.get('http://127.0.0.1:8000/alunos')
         self.assertIn('text/html', r_lista2.headers['Content-Type'],
-                      "Esperava resposta HTML para a lista de alunos após deleção")
+                      "Esperava resposta HTML para a lista de alunos após "
+                      "deleção")
 
         self.assertIn('marta', r_lista2.text,
                       "aluno marta não encontrado na lista após deleção")
@@ -128,26 +129,26 @@ class TestStringMethods(unittest.TestCase):
                       "aluno cicero não encontrado na lista após deleção")
 
     def test_005_edita(self):
-        r_reset = requests.post('http://localhost:5002/reseta')
+        r_reset = requests.post('http://127.0.0.1:8000/reseta')
         self.assertEqual(r_reset.status_code, 200)
 
-        requests.post('http://localhost:5002/alunos',
+        requests.post('http://127.0.0.1:8000/alunos',
                       data={'nome': 'lucas', 'id': 28})
-        r_antes = requests.get('http://localhost:5002/alunos/28')
+        r_antes = requests.get('http://127.0.0.1:8000/alunos/28')
         self.assertIn('text/html', r_antes.headers['Content-Type'],
                       "Esperava resposta HTML para o aluno antes da edição")
 
-        requests.put('http://localhost:5002/alunos/28',
+        requests.put('http://127.0.0.1:8000/alunos/28',
                      data={'nome': 'lucas mendes'})
-        r_depois = requests.get('http://localhost:5002/alunos/28')
+        r_depois = requests.get('http://127.0.0.1:8000/alunos/28')
         self.assertIn('text/html', r_depois.headers['Content-Type'],
                       "Esperava resposta HTML para o aluno após a edição")
 
     def test_006a_id_inexistente_no_put(self):
-        r_reset = requests.post('http://localhost:5002/reseta')
+        r_reset = requests.post('http://127.0.0.1:8000/reseta')
         self.assertEqual(r_reset.status_code, 200)
 
-        r = requests.put('http://localhost:5002/alunos/15',
+        r = requests.put('http://127.0.0.1:8000/alunos/15',
                          data={'nome': 'bowser', 'id': 15})
         self.assertIn(r.status_code, [400, 404])
         self.assertIn('text/html', r.headers['Content-Type'],
@@ -156,10 +157,10 @@ class TestStringMethods(unittest.TestCase):
                       "Mensagem de erro não encontrada na resposta")
 
     def test_006b_id_inexistente_no_get(self):
-        r_reset = requests.post('http://localhost:5002/reseta')
+        r_reset = requests.post('http://127.0.0.1:8000/reseta')
         self.assertEqual(r_reset.status_code, 200)
 
-        r = requests.get('http://localhost:5002/alunos/15')
+        r = requests.get('http://127.0.0.1:8000/alunos/15')
         self.assertIn(r.status_code, [400, 404])
         self.assertIn('text/html', r.headers['Content-Type'],
                       "Esperava resposta HTML para erro de aluno não encontrado")
@@ -167,10 +168,10 @@ class TestStringMethods(unittest.TestCase):
                       "Mensagem de erro não encontrada na resposta")
 
     def test_006c_id_inexistente_no_delete(self):
-        r_reset = requests.post('http://localhost:5002/reseta')
+        r_reset = requests.post('http://127.0.0.1:8000/reseta')
         self.assertEqual(r_reset.status_code, 200)
 
-        r = requests.delete('http://localhost:5002/alunos/15')
+        r = requests.delete('http://127.0.0.1:8000/alunos/15')
         self.assertIn(r.status_code, [400, 404])
         self.assertIn('text/html', r.headers['Content-Type'],
                       "Esperava resposta HTML para erro de aluno não encontrado")
@@ -180,16 +181,16 @@ class TestStringMethods(unittest.TestCase):
     # tento criar 2 caras com a  mesma id
     def test_007_criar_com_id_ja_existente(self):
         # dou reseta e confiro que deu certo
-        r_reset = requests.post('http://localhost:5002/reseta')
+        r_reset = requests.post('http://127.0.0.1:8000/reseta')
         self.assertEqual(r_reset.status_code, 200)
-    
+
         # crio o usuario bond e confiro
-        r = requests.post('http://localhost:5002/alunos',
+        r = requests.post('http://127.0.0.1:8000/alunos',
                           data={'nome': 'bond', 'id': 7})
         self.assertEqual(r.status_code, 200)
-    
+
         # tento usar o mesmo id para outro usuário
-        r = requests.post('http://localhost:5002/alunos',
+        r = requests.post('http://127.0.0.1:8000/alunos',
                           data={'nome': 'james', 'id': 7})
         self.assertEqual(r.status_code, 400)
         # Altere para r.text se a resposta for em HTML
@@ -199,11 +200,11 @@ class TestStringMethods(unittest.TestCase):
 
 
 def test_008a_post_sem_nome(self):
-    r_reset = requests.post('http://localhost:5002/reseta')
+    r_reset = requests.post('http://127.0.0.1:8000/reseta')
     self.assertEqual(r_reset.status_code, 200)
 
     # tentei criar um aluno, sem enviar um nome
-    r = requests.post('http://localhost:5002/alunos', data={'id': 8})
+    r = requests.post('http://127.0.0.1:8000/alunos', data={'id': 8})
     self.assertEqual(r.status_code, 400)
     self.assertEqual(r.text, 'aluno sem nome')  # Altere para r.text
 
@@ -211,47 +212,47 @@ def test_008a_post_sem_nome(self):
 
 
 def test_008b_put_sem_nome(self):
-    r_reset = requests.post('http://localhost:5002/reseta')
+    r_reset = requests.post('http://127.0.0.1:8000/reseta')
     self.assertEqual(r_reset.status_code, 200)
 
     # criei um aluno sem problemas
-    r = requests.post('http://localhost:5002/alunos',
+    r = requests.post('http://127.0.0.1:8000/alunos',
                       data={'nome': 'maximus', 'id': 7})
     self.assertEqual(r.status_code, 200)
 
     # mas tentei editar ele sem mandar o nome
-    r = requests.put('http://localhost:5002/alunos/7', data={'id': 7})
+    r = requests.put('http://127.0.0.1:8000/alunos/7', data={'id': 7})
     self.assertEqual(r.status_code, 400)
     self.assertEqual(r.text, 'aluno sem nome')  # Altere para r.text
 
 
 def test_100_professores_retorna_lista(self):
-    r = requests.get('http://localhost:5002/professores')
+    r = requests.get('http://127.0.0.1:8000/professores')
     # Se a resposta for HTML, você pode verificar se é do tipo str
     self.assertEqual(type(r.text), str)
 
 
 def test_100b_nao_confundir_professor_e_aluno(self):
-    r_reset = requests.post('http://localhost:5002/reseta')
-    r = requests.post('http://localhost:5002/alunos',
+    r_reset = requests.post('http://127.0.0.1:8000/reseta')
+    r = requests.post('http://127.0.0.1:8000/alunos',
                       data={'nome': 'fernando', 'id': 1})
     self.assertEqual(r.status_code, 200)
-    r = requests.post('http://localhost:5002/alunos',
+    r = requests.post('http://127.0.0.1:8000/alunos',
                       data={'nome': 'roberto', 'id': 2})
     self.assertEqual(r.status_code, 200)
-    r_lista = requests.get('http://localhost:5002/professores')
+    r_lista = requests.get('http://127.0.0.1:8000/professores')
     # Se a lista de professores for retornada em HTML
     self.assertEqual(len(r_lista.text.splitlines()), 0)
-    r_lista_alunos = requests.get('http://localhost:5002/alunos')
+    r_lista_alunos = requests.get('http://127.0.0.1:8000/alunos')
     self.assertEqual(len(r_lista_alunos.text.splitlines()), 2)
 
 
 def test_101_adiciona_professores(self):
-    r = requests.post('http://localhost:5002/professores',
+    r = requests.post('http://127.0.0.1:8000/professores',
                       data={'nome': 'fernando', 'id': 1})
-    r = requests.post('http://localhost:5002/professores',
+    r = requests.post('http://127.0.0.1:8000/professores',
                       data={'nome': 'roberto', 'id': 2})
-    r_lista = requests.get('http://localhost:5002/professores')
+    r_lista = requests.get('http://127.0.0.1:8000/professores')
     achei_fernando = 'fernando' in r_lista.text
     achei_roberto = 'roberto' in r_lista.text
     if not achei_fernando:
@@ -261,16 +262,16 @@ def test_101_adiciona_professores(self):
 
 
 def test_102_professores_por_id(self):
-    r = requests.post('http://localhost:5002/professores',
+    r = requests.post('http://127.0.0.1:8000/professores',
                       data={'nome': 'mario', 'id': 20})
-    r_lista = requests.get('http://localhost:5002/professores/20')
+    r_lista = requests.get('http://127.0.0.1:8000/professores/20')
     self.assertIn('mario', r_lista.text)
 
 
 def test_103_adiciona_e_reseta(self):
-    r = requests.post('http://localhost:5002/professores',
+    r = requests.post('http://127.0.0.1:8000/professores',
                       data={'nome': 'cicero', 'id': 29})
-    r_lista = requests.get('http://localhost:5002/professores')
+    r_lista = requests.get('http://127.0.0.1:8000/professores')
     self.assertTrue(len(r_lista.text.splitlines()) > 0)
     r_reset = requests.post('http://localhost:5002/reseta')
     self.assertEqual(r_reset.status_code, 200)

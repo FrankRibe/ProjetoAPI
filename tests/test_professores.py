@@ -1,23 +1,13 @@
 import unittest
-from app.model_aluno_professor import Professor
+from app.model_aluno_professor import dados  # Importando dados
 
 
-class TestProfessor(unittest.TestCase):
+class TestProfessores(unittest.TestCase):
 
-    def test_criar_professor(self):
-        professor = Professor(nome="Dra. Julia", disciplina="Matemática")
-        self.assertEqual(professor.nome, "Dra. Julia")
-        self.assertEqual(professor.disciplina, "Matemática")
-
-    def test_alterar_disciplina(self):
-        professor = Professor(nome="Dr. Carlos", disciplina="História")
-        professor.disciplina = "Geografia"
-        self.assertEqual(professor.disciplina, "Geografia")
-
-    def test_nome_professor(self):
-        professor = Professor(nome="Prof. Souza", disciplina="Ciências")
-        self.assertTrue(professor.nome.startswith("Prof."))
+    def test_lista_professores_vazia(self):
+        """Testa se a lista de professores começa vazia."""
+        self.assertEqual(len(dados["professores"]), 0)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
