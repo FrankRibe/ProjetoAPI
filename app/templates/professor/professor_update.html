@@ -8,23 +8,25 @@
 </head>
 <body>
     <h1>Atualizar Professor</h1>
-    <form method="POST" action="/professores/{{ professor.id }}/atualizar">
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" name="nome" value="{{ professor.nome }}" required>
+    <section class="container">
+        <form method="POST" action="/professores/{{ professor.id }}/atualizar">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" value="{{ professor.nome }}" required>
 
-        <label for="idade">Idade:</label>
-        <input type="number" id="idade" name="idade" value="{{ professor.idade }}" required>
+            <label for="idade">Idade:</label>
+            <input type="number" id="idade" name="idade" value="{{ professor.idade }}" required>
 
-        <label for="materia">Matéria:</label>
-        <input type="text" id="materia" name="materia" value="{{ professor.materia }}" required>
+            <label for="materia">Matéria:</label>
+            <input type="text" id="materia" name="materia" value="{{ professor.materia }}" required>
 
-        <label for="observacoes">Observações:</label>
-        <textarea id="observacoes" name="observacoes">{{ professor.observacoes }}</textarea>
+            <label for="observacoes">Observações:</label>
+            <textarea id="observacoes" name="observacoes">{{ professor.observacoes }}</textarea>
 
-        <input class="input_atualizar" type="submit" value="Atualizar Professor">
-    </form>
+            <input class="input_atualizar" type="submit" value="Atualizar Professor">
+        </form>
 
-    <a href="/professor"><button>Voltar para a lista de professores</button></a>
+        <a href="/professor"><button>Voltar para a lista de professores</button></a>
+    </section>
 
     <script>
         function confirmDelete(form) {

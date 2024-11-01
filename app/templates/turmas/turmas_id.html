@@ -8,11 +8,18 @@
 </head>
 <body>
     <h1>Detalhes da Turma</h1>
+
     <section class="container">
         <p><strong>ID:</strong> {{ turma.id }}</p>
         <p><strong>Descrição:</strong> {{ turma.descricao }}</p>
         <p><strong>Professor ID:</strong> {{ turma.professor_id }}</p>  
         <p><strong>Status:</strong> {{ 'Ativo' if turma.status else 'Inativo' }}</p>
+        <h2>Professor</h2>
+        <p><strong>ID:</strong> {{ turma.professor.id }}</p>
+        <p><strong>Nome:</strong> {{ turma.professor.nome }}</p>
+        <p><strong>Idade:</strong> {{ turma.professor.idade }}</p>
+        <p><strong>Matéria:</strong> {{ turma.professor.materia }}</p>
+        <p><strong>Observações:</strong> {{ turma.professor.observacoes }}</p>
 
         <a href="/turmas/{{ turma.id }}/atualizar"><button>Editar Turma</button></a>
         <form action="/turmas/{{ turma.id }}" method="POST" onsubmit="return confirmDelete(this);">
@@ -22,6 +29,7 @@
         
         <a href="/turmas"><button>Voltar para a lista de turmas</button></a>
     </section>
+    
 
     <script>
         function confirmDelete(form) {

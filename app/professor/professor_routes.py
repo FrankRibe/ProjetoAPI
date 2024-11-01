@@ -78,3 +78,4 @@ def excluir_professor_view(id_professor):
             return "", 204
         except ProfessorNaoEncontrado:
             return jsonify({"message": "Professor não encontrado"}), 404
+    return jsonify({"message": "Método não permitido"}), 405

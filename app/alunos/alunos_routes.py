@@ -43,15 +43,20 @@ def editar_aluno_view(id_aluno):
 
 @alunos_blueprint.route("/alunos", methods=["POST"])
 def adicionar_aluno_view():
-    data = request.form
+    print("Requisição POST recebida na rota /alunos")
+    data = request.form  # Usando request.form já que você está enviando dados do formulário
+
+    if not data.get("nome"):
+        return jsonify({"error": "aluno sem nome"}), 400
+
     try:
         data_nascimento = datetime.strptime(
             data["data_nascimento"], '%Y-%m-%d').date()
     except ValueError:
-        return jsonify({"error": "Data de nascimento inválida"}), 400
+        return render_template('erro.html', mensagem="Data de nascimento inválida"), 400
 
     if data.get("turma_id") is None:
-        return jsonify({"error": "turma_id não pode ser None"}), 400
+        return render_template('erro.html', mensagem="turma_id não pode ser None"), 400
 
     novo_aluno = {
         "nome": data["nome"],
@@ -65,23 +70,38 @@ def adicionar_aluno_view():
 
     try:
         adicionar_aluno(novo_aluno)
-        return redirect(url_for('alunos.listar_alunos_view'))
+        print("Dados recebidos:", data)
+        # Redireciona após sucesso
+        # Verifique se o nome da função está correto
+        return redirect(url_for('alunos.listar_alunos_view')), 302
     except Exception as e:
-        return jsonify({"error": str(e)}), 400
+        print(f"Erro ao adicionar aluno: {str(e)}")  # Debug: imprime o erro
+        return render_template('erro.html', mensagem=str(e)), 500
 
 
 @alunos_blueprint.route("/alunos/<int:id_aluno>/atualizar",
                         methods=["GET", "POST"], endpoint="update_aluno")
 def atualizar_aluno_view(id_aluno):
     aluno = Aluno.query.get(id_aluno)
+    if aluno is None:
+        return jsonify({"error": "Aluno não encontrado"}), 404
+
     if request.method == 'POST':
         novos_dados = request.form.to_dict()
         print(f"Dados recebidos para atualização: {novos_dados}")
+
+        obrigatorios = ['nome', 'idade', 'turma_id', 'data_nascimento',
+                        'nota_primeiro_semestre', 'nota_segundo_semestre', 'media_final']
+
+        for campo in obrigatorios:
+            if campo not in novos_dados or not novos_dados[campo]:
+                return jsonify({"error": f"{campo} é obrigatório"}), 400
+
         try:
             atualizar_aluno(id_aluno, novos_dados)
             return redirect(url_for('listar_alunos'))
         except ValueError as e:
-            return jsonify({"error": str(e)}), 400
+            return jsonify({"error": str(e)}), 500
     return render_template('aluno/aluno_update.html', aluno=aluno,
                            turmas=Turma.query.all())
 

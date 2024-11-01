@@ -1,7 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
-
 # Criação da instância do Flask
 app = Flask(__name__)
 
@@ -27,7 +26,5 @@ app.register_blueprint(turmas_blueprint)
 from app.alunos.alunos_routes import alunos_blueprint
 app.register_blueprint(alunos_blueprint)
 
-
 # Importando modelos e rotas
 from app import models, routes  # Certifique-se de que as rotas estão definidas
-
