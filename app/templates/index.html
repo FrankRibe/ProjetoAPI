@@ -4,46 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página Inicial da Escola API</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
 </head>
 <body>
-    <h1>Bem-vindo à Escola API!</h1>
-    <h2>
-        <a href="/professor">Professores</a>
-    </h2>
-    <ul>
-        {% for professor in professores %}
-            <li>
-                <a href="/professor/{{ professor.id }}">{{ professor.nome }}</a> - {{ professor.materia }}
-            </li>
-        {% else %}
-            <li>Nenhum professor encontrado.</li>
-        {% endfor %}
-    </ul>
+    <div class="titulo">
+        <h1>Bem-vindo à Escola API!</h1>
+    </div>
+    <section class="container">
+    <div class="professores">
+        <h2>
+            <a href="/professor">Professores</a>
+        </h2>
+        <ul>
+            {% for professor in professores %}
+                <li>
+                    <a href="/professor/{{ professor.id }}">{{ professor.nome }}</a> - {{ professor.materia }}
+                </li>
+            {% else %}
+                <li>Nenhum professor encontrado.</li>
+            {% endfor %}
+        </ul>
+    </div>
 
-    <h2>
-        <a href="/turmas">Turmas</a>
-    </h2>
-    <ul>
-        {% for turma in turmas %}
-            <li>
-                <a href="/turmas/{{ turma.id }}">{{ turma.descricao }}</a>
-            </li>
-        {% else %}
-            <li>Nenhuma turma encontrada.</li>
-        {% endfor %}
-    </ul>
+    <div class="turmas">
+        <h2>
+            <a href="/turmas">Turmas</a>
+        </h2>
+        <ul>
+            {% for turma in turmas %}
+                <li>
+                    <a href="/turmas/{{ turma.id }}">{{ turma.descricao }}</a>
+                </li>
+            {% else %}
+                <li>Nenhuma turma encontrada.</li>
+            {% endfor %}
+        </ul>
+    </div>
 
-    <h2>
-        <a href="/alunos">Alunos</a>
-    </h2>
-    <ul>
-        {% for aluno in alunos %}
-            <li>
-                <a href="/alunos/{{ aluno.id }}">{{ aluno.nome }}</a> - {{ aluno.idade }} anos
-            </li>
-        {% else %}
-            <li>Nenhum aluno encontrado.</li>
-        {% endfor %}
-    </ul>
+    <div class="alunos">
+        <h2>
+            <a href="/alunos">Alunos</a>
+        </h2>
+        <ul>
+            {% for aluno in alunos %}
+                <li>
+                    <a href="/alunos/{{ aluno.id }}">{{ aluno.nome }}</a> - {{ aluno.idade }} anos
+                </li>
+            {% else %}
+                <li>Nenhum aluno encontrado.</li>
+            {% endfor %}
+        </ul>
+    </div>
+    </section>
 </body>
 </html>

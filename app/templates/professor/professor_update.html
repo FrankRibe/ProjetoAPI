@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atualizar Professor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='professor_update.css') }}">
 </head>
 <body>
     <h1>Atualizar Professor</h1>
@@ -20,7 +21,7 @@
         <label for="observacoes">Observações:</label>
         <textarea id="observacoes" name="observacoes">{{ professor.observacoes }}</textarea>
 
-        <input type="submit" value="Atualizar Professor">
+        <input class="input_atualizar" type="submit" value="Atualizar Professor">
     </form>
 
     <a href="/professor"><button>Voltar para a lista de professores</button></a>

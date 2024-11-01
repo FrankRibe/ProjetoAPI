@@ -4,23 +4,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Detalhes do Aluno</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='alunos_id.css') }}">
 </head>
 <body>
   <h1>Detalhes do Aluno</h1>
-  <p><strong>ID:</strong> {{ aluno.id }}</p>
-  <p><strong>Nome:</strong> {{ aluno.nome }}</p>
-  <p><strong>Idade:</strong> {{aluno.idade}}</p>
-  <p><strong>Data de nascimento:</strong> {{aluno.data_nascimento}}</p>
-  <p><strong>Nota do primeiro semestre:</strong> {{aluno.nota_primeiro_semestre}}</p>
-  <p><strong>Nota do segundo semestre:</strong> {{aluno.nota_segundo_semestre}}</p>
-  <p><strong>Média final:</strong> {{aluno.media_final}}</p>
+  <section class="container">
+    <p><strong>ID:</strong> {{ aluno.id }}</p>
+    <p><strong>Nome:</strong> {{ aluno.nome }}</p>
+    <p><strong>Idade:</strong> {{aluno.idade}}</p>
+    <p><strong>Data de nascimento:</strong> {{aluno.data_nascimento}}</p>
+    <p><strong>Nota do primeiro semestre:</strong> {{aluno.nota_primeiro_semestre}}</p>
+    <p><strong>Nota do segundo semestre:</strong> {{aluno.nota_segundo_semestre}}</p>
+    <p><strong>Média final:</strong> {{aluno.media_final}}</p>
 
-  <a href="/alunos/{{ aluno.id }}/atualizar"><button>Editar Aluno</button></a>
-  <form action="/alunos/{{ aluno.id }}" method="POST" onsubmit="return confirmDelete(this);">
-    <input type="hidden" name="_method" value="DELETE">
-    <button type="submit">Excluir Aluno</button>
-  </form>
-  <a href="{{ url_for('alunos.listar_alunos_view') }}"><button>Voltar para a lista de alunos</button></a>
+    <a href="/alunos/{{ aluno.id }}/atualizar"><button>Editar Aluno</button></a>
+    <form action="/alunos/{{ aluno.id }}" method="POST" onsubmit="return confirmDelete(this);">
+      <input type="hidden" name="_method" value="DELETE">
+      <button type="submit">Excluir Aluno</button>
+    </form>
+    <a href="{{ url_for('alunos.listar_alunos_view') }}"><button>Voltar para a lista de alunos</button></a>
+  </section>
 
   <script>
     function confirmDelete(form){

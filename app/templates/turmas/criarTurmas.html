@@ -4,22 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adicionar Turma</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='criarTurmas.css') }}">
 </head>
 <body>
     <h1>Adicionar Nova Turma</h1>
-    <form method="POST" action="/turmas/novo">  
-        <label for="descricao">Descrição:</label>
-        <input type="text" id="descricao" name="descricao" required>
+    <section class="container">
+        <form method="POST" action="/turmas/novo">  
+            <label for="descricao">Descrição:</label>
+            <input type="text" id="descricao" name="descricao" required>
 
-        <label for="professor_id">Professor ID:</label>
-        <input type="number" id="professor_id" name="professor_id" required>
+            <label for="professor_id">Professor ID:</label>
+            <input type="number" id="professor_id" name="professor_id" required>
 
-        <label for="status">Ativo:</label>
-        <input type="checkbox" id="status" name="status" value="1">
-        <span>Marque se a turma está ativa</span>
+            <label for="status">Ativo:</label>
+            <input type="checkbox" id="status" name="status" value="1">
+            <span>Marque se a turma está ativa</span>
 
-        <input type="submit" value="Adicionar Turma">
-    </form>
-    <a href="/turmas"><button>Voltar para a lista de turmas</button></a>
+            <input class="input_adc" type="submit" value="Adicionar Turma">
+        </form>
+        <a href="/turmas"><button>Voltar para a lista de turmas</button></a>
+    </section>
 </body>
 </html>

@@ -4,21 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalhes da Turma</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='turmas_id.css') }}">
 </head>
 <body>
     <h1>Detalhes da Turma</h1>
-    <p><strong>ID:</strong> {{ turma.id }}</p>
-    <p><strong>Descrição:</strong> {{ turma.descricao }}</p>
-    <p><strong>Professor ID:</strong> {{ turma.professor_id }}</p>  
-    <p><strong>Status:</strong> {{ 'Ativo' if turma.status else 'Inativo' }}</p>
+    <section class="container">
+        <p><strong>ID:</strong> {{ turma.id }}</p>
+        <p><strong>Descrição:</strong> {{ turma.descricao }}</p>
+        <p><strong>Professor ID:</strong> {{ turma.professor_id }}</p>  
+        <p><strong>Status:</strong> {{ 'Ativo' if turma.status else 'Inativo' }}</p>
 
-    <a href="/turmas/{{ turma.id }}/atualizar"><button>Editar Turma</button></a>
-    <form action="/turmas/{{ turma.id }}" method="POST" onsubmit="return confirmDelete(this);">
-        <input type="hidden" name="_method" value="DELETE">
-        <button type="submit">Excluir Turma</button>
-    </form>
-    
-    <a href="/turmas"><button>Voltar para a lista de turmas</button></a>
+        <a href="/turmas/{{ turma.id }}/atualizar"><button>Editar Turma</button></a>
+        <form action="/turmas/{{ turma.id }}" method="POST" onsubmit="return confirmDelete(this);">
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit">Excluir Turma</button>
+        </form>
+        
+        <a href="/turmas"><button>Voltar para a lista de turmas</button></a>
+    </section>
 
     <script>
         function confirmDelete(form) {

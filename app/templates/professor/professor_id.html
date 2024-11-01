@@ -4,23 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalhes do Professor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='professor_id.css') }}">
 </head>
 <body>
     <h1>Detalhes do Professor</h1>
-    <p><strong>ID:</strong> {{ professor.id }}</p>
-    <p><strong>Nome:</strong> {{ professor.nome }}</p>
-    <p><strong>Idade:</strong> {{ professor.idade }}</p>
-    <p><strong>Matéria:</strong> {{ professor.matéria }}</p>
-    <p><strong>Observações:</strong> {{ professor.observações }}</p>
-
-    <a href="/professores/{{ professor.id }}/atualizar"><button>Editar</button></a>
-    <form action="/professores/{{ professor.id }}" method="POST" onsubmit="return confirmDelete(this);">
-        <input type="hidden" name="_method" value="DELETE">
-        <button type="submit">Excluir Professor</button>
-    </form> 
-    
-    <a href="/professor"><button>Voltar para a lista de professores</button></a>
-
+    <section class="container4">
+        <p><strong>ID:</strong> {{ professor.id }}</p>
+        <p><strong>Nome:</strong> {{ professor.nome }}</p>
+        <p><strong>Idade:</strong> {{ professor.idade }}</p>
+        <p><strong>Matéria:</strong> {{ professor.matéria }}</p>
+        <p><strong>Observações:</strong> {{ professor.observações }}</p>
+        <a href="/professores/{{ professor.id }}/atualizar"><button>Editar</button></a>
+        <form action="/professores/{{ professor.id }}" method="POST" onsubmit="return confirmDelete(this);">
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit">Excluir Professor</button>
+        </form> 
+        
+        <a href="/professor"><button>Voltar para a lista de professores</button></a>
+    </section>
     <script>
         function confirmDelete(form) {
             if (confirm("Tem certeza que deseja excluir este professor?")) {

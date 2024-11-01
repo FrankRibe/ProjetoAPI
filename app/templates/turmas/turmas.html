@@ -4,33 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Turmas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='turmas.css') }}">
 </head>
 <body>
     <h1>Lista de Turmas</h1>
-    <a href="{{ url_for('index') }}"><button>Página de início</button></a>
-    <a href="/turmas/novo"><button>Adicionar Turma</button></a>
-    <ul>
-        {% if turmas %}
-            {% for turma in turmas %}
-                <li>
-                    <strong>Descrição:</strong> {{ turma.descricao }} 
-                    - <strong>Status:</strong> {{ 'Ativo' if turma.status else 'Inativo' }}
-                    <a href="/turmas/{{ turma.id }}"><button>Detalhes</button></a>
-                    <a href="/turmas/{{ turma.id }}/atualizar"><button>Editar</button></a>
-                    <form action="/turmas/{{ turma.id }}" method="POST" style="display:inline;" onsubmit="return confirmDelete(this);">
-                        <input type="hidden" name="_method" value="DELETE">
-                        <button type="submit">Excluir</button>
-                    </form>
-                </li>
-            {% endfor %}
-        {% else %}
-            <li>Nenhuma turma cadastrada.</li>
-        {% endif %}
-    </ul>
+    <section class="container">
+        <div class="button_home">
+            <a href="{{ url_for('index') }}"><button>Página de início</button></a>
+            <a href="/turmas/novo"><button>Adicionar Turma</button></a>
+        </div>
+        <ul>
+            {% if turmas %}
+                {% for turma in turmas %}
+                    <li>
+                        <strong>Descrição:</strong> {{ turma.descricao }} 
+                        - <strong>Status:</strong> {{ 'Ativo' if turma.status else 'Inativo' }}
+                        <a href="/turmas/{{ turma.id }}"><button>Detalhes</button></a>
+                        <a href="/turmas/{{ turma.id }}/atualizar"><button>Editar</button></a>
+                        <form action="/turmas/{{ turma.id }}" method="POST" style="display:inline;" onsubmit="return confirmDelete(this);">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit">Excluir</button>
+                        </form>
+                    </li>
+                {% endfor %}
+            {% else %}
+                <li>Nenhuma turma cadastrada.</li>
+            {% endif %}
+        </ul>
+    </section>
 </body>
 <script>
     function confirmDelete(form) {
-        if (confirm("Tem Certeza que deseja excluir este aluno")) {
+        if (confirm("Tem Certeza que deseja excluir esta turma")) {
             fetch(form.action, {
                 method: "POST",
                 body: new URLSearchParams(new FormData(form))
@@ -39,7 +44,7 @@
                 if (response.ok) {
                     location.reload();  // Recarrega a página após a exclusão
                 } else {
-                    alert("Erro ao excluir o aluno.");
+                    alert("Erro ao excluir a turma.");
                 }
             })
             .catch(error => {

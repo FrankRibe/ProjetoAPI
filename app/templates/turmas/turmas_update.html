@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atualizar Turma</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='turmas_update.css') }}">
 </head>
 <body>
     <h1>Atualizar Turma</h1>
@@ -18,7 +19,7 @@
         <input type="checkbox" id="status" name="status" value="1" {% if turma.status %}checked{% endif %}>
         <span>Marque se a turma está ativa</span>
 
-        <input type="submit" value="Atualizar Turma">
+        <input class="input_atualizar" type="submit" value="Atualizar Turma">
     </form>
     <a href="/turmas"><button>Voltar para a lista de turmas</button></a>
 </body>

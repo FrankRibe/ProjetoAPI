@@ -1,0 +1,76 @@
+body {
+    background-color: #15568b;
+    display: grid;
+}
+
+h1 {
+    font-family: 'Impact', sans-serif; /* Usa a fonte Impact */
+    color: rgba(2, 2, 2, 0.86);
+    text-align: center;  
+    margin-top: 50px;
+    border: 4px solid #000000;
+    max-width: max-content;
+    text-align: center;
+    padding: 10px; /* Espaçamento interno */
+    margin: 40px; /* Espaçamento externo */
+    border-radius: 10px; /* Cantos arredondados */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra leve */
+    background-color: #B3B3B3;
+    justify-self: center;
+}
+
+
+
+.container {
+    display: grid;
+    align-items: start;
+    justify-content: center;
+    justify-self: center;
+    padding: 15px;
+    gap: 20px;
+    border: 4px solid #000000;
+    background-color: #B3B3B3;
+}
+
+.container form {
+    display: grid;
+}
+
+.input_adc {
+    background: rgb(0, 17, 255);
+    background: linear-gradient(0deg, rgb(2, 61, 255) 0%, rgb(1, 60, 255) 100%);
+    border: none;
+    border-radius: 10px;
+    margin-top: 10px;
+    
+  }
+  .input_adc:before {
+    height: 0%;
+    width: 2px;
+  }
+  .input_adc:hover {
+    box-shadow:  4px 4px 6px 0 rgba(255,255,255,.5),
+                -4px -4px 6px 0 rgba(116, 125, 136, .5), 
+      inset -4px -4px 6px 0 rgba(255,255,255,.2),
+      inset 4px 4px 6px 0 rgba(0, 0, 0, .4);
+}
+
+
+
+button {
+    background: rgb(0, 17, 255);
+    background: linear-gradient(0deg, rgb(2, 61, 255) 0%, rgb(1, 60, 255) 100%);
+    border: none;
+    border-radius: 10px;
+    
+  }
+  button:before {
+    height: 0%;
+    width: 2px;
+  }
+  button:hover {
+    box-shadow:  4px 4px 6px 0 rgba(255,255,255,.5),
+                -4px -4px 6px 0 rgba(116, 125, 136, .5), 
+      inset -4px -4px 6px 0 rgba(255,255,255,.2),
+      inset 4px 4px 6px 0 rgba(0, 0, 0, .4);
+}

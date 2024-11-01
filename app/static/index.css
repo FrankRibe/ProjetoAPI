@@ -1,0 +1,44 @@
+@font-face {
+    font-family: 'Raleway Thin';
+    src: url(../src/fonts/Raleway-VariableFont_wght.ttf) format('truetype');
+}
+
+body {
+    font-family: 'Raleway Thin';
+    background-color: #15568b;
+    margin-bottom: 50px;
+
+}
+
+.titulo {
+    display: grid;
+    justify-content: center;
+}
+
+h1 {
+    font-family: 'Impact', sans-serif; /* Usa a fonte Impact */
+    color: rgba(2, 2, 2, 0.86);
+    text-align: center;  
+    margin-top: 50px;
+    border: 4px solid #000000;
+    max-width: max-content;
+    padding: 10px; /* Espaçamento interno */
+    margin: 40px; /* Espaçamento externo */
+    border-radius: 10px; /* Cantos arredondados */
+    background-color: #B3B3B3;
+}
+
+a {
+    color: rgb(35, 31, 233);
+}
+
+.container {
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    gap: 120px;
+    border: 4px solid #000000;
+    background-color: #B3B3B3;
+    padding: 25px;
+}
+

@@ -4,29 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Professores</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='professor.css') }}">
 </head>
 <body>
-    <h1>Lista de Professores</h1>
-    <a href="{{ url_for('index') }}"><button>Página de início</button></a>
-    <a href="/professores/novo"><button>Adicionar Professor</button></a>
-    <ul>
-        {% if professores %}
-            {% for professor in professores %}
-                <li>
-                    <strong>Nome:</strong> {{ professor.nome }} 
-                    <strong>Matéria:</strong> {{ professor.matéria }}
-                    <a href="/professor/{{ professor.id }}"><button>Detalhes</button></a>
-                    <a href="/professores/{{ professor.id }}/atualizar"><button>Editar</button></a>
-                    <form action="/professores/{{ professor.id }}" method="POST" onsubmit="return confirmDelete(this);">
-                        <input type="hidden" name="_method" value="DELETE">
-                        <button type="submit">Excluir Professor</button>
-                    </form>                    
-                </li>
-            {% endfor %}
-        {% else %}
-            <li>Nenhum professor cadastrado.</li>
-        {% endif %}
-    </ul>
+    <div class="titulo_prof">
+        <h1>Lista de Professores</h1>
+    </div>
+    <section class="container2">
+        <div class="button_home">
+            <a href="{{ url_for('index') }}"><button>Página de início</button></a>
+            <a href="/professores/novo"><button>Adicionar Professor</button></a>
+        </div>
+        <ul>
+            {% if professores %}
+                {% for professor in professores %}
+                    <li>
+                        <strong>Nome:</strong> {{ professor.nome }} 
+                        <strong>Matéria:</strong> {{ professor.matéria }}
+                    <div class="button_profs">
+                        <a href="/professor/{{ professor.id }}"><button>Detalhes</button></a>
+                        <a href="/professores/{{ professor.id }}/atualizar"><button>Editar</button></a>
+                        <form action="/professores/{{ professor.id }}" method="POST" onsubmit="return confirmDelete(this);">
+                            <input type="hidden" name="_method" value="DELETE">                           
+                            <button type="submit">Excluir Professor</button>     
+                    </div>                      
+                        </form>                    
+                    </li>
+                {% endfor %}
+            {% else %}
+                <li>Nenhum professor cadastrado.</li>
+            {% endif %}
+        </ul>
+    </section>
 </body>
 <script>
 function confirmDelete(form) {
