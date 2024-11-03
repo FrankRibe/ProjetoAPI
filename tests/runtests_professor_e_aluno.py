@@ -75,7 +75,7 @@ class TestAlunoEndpoints(unittest.TestCase):
             json_data['message'], 'Professor não encontrado', "Mensagem de erro inesperada.")
 
     def test_004_professor_deletado_com_sucesso(self):
-        id_professor = 2
+        id_professor = 6
         res = requests.post(
             f'http://127.0.0.1:8000/professores/{id_professor}',
             data={'_method': 'DELETE'})

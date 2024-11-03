@@ -76,7 +76,7 @@ def adicionar_aluno_view():
         return redirect(url_for('alunos.listar_alunos_view')), 302
     except Exception as e:
         print(f"Erro ao adicionar aluno: {str(e)}")  # Debug: imprime o erro
-        return render_template('erro.html', mensagem=str(e)), 500
+        return jsonify({"error": str(e)}), 400
 
 
 @alunos_blueprint.route("/alunos/<int:id_aluno>/atualizar",
